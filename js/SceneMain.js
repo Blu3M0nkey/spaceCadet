@@ -61,11 +61,55 @@ class SceneMain extends Phaser.Scene{
     this.key_D = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
+        this.rocks = this.add.group();
+        this.gemI = this.add.group();
+        this.gemII = this.add.group();
+        
+        this.time.addEvent({
+            delay:1000,
+            callback: function(){
+                var rock = new Rock(
+                this,
+                700, 
+                Phaser.Math.Between(20, 500),'rock');
+                               
+                
+                
+                this.rocks.add(rock);
+                
+            },
+            callbackScope: this,
+            loop:true
+        });
+        
+        this.time.addEvent({
+            delay:3000,
+            callback: function(){
+                var ggem = new GemI(
+                this,
+                800,
+                Phaser.Math.Between( 20, 450),
+                'grnGem');  
+                
+                var rgem = new GemII(
+                this,
+                800,
+                Phaser.Math.Between( 20, 450),
+                'redGem');
+                
+                this.gemI.add(ggem);
+                
+                this.gemII.add(rgem);
+            },
+            callbackScope: this,
+            loop:true
+        });
+        
     }
     
     update(){
         this.player.update();
-
+        
         if(this.key_W.isDown && !this.key_A.isDown)
     {
         this.player.moveUp();

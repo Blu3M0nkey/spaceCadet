@@ -48,3 +48,27 @@ class Player extends Entity{
         
     
 }
+
+class Rock extends Entity{
+    constructor(scene, x, y, key){
+        super(scene, x, y, key, 'Rock');
+        this.body.velocity.x = -Phaser.Math.Between(60,100);
+     }
+    //update(){
+    //    this.setVelocityX(-100);
+    //}
+}
+
+class GemI extends Entity{
+    constructor(scene, x, y, key){
+        super(scene, x, y, key, 'GemI');
+        this.body.velocity.x = -Phaser.Math.Between( 50, 80);
+    }
+}
+
+class GemII extends Entity{
+    constructor(scene, x, y, key){
+        super(scene, x, y, key, 'GemII');
+        this.body.velocity.x = -Phaser.Math.Between( 50,80);
+    }
+}
