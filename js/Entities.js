@@ -8,21 +8,39 @@ class Entity extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.world.enableBody(this,0);
         this.setData("type", type);
-        this.setData("isDead",false); //maybe not important
-        
+        this.setData("isDead",false);
         
     }
+    explode(canDestroy){
+        if(!this.getData("isDead")){
+            this.setTexture("sprExplosion");
+            this.anims.play("sprExplosion");
+            
+            //add sounds
+        }
+        this.on('animationcomplete', function(){
+            if(canDestroy){
+                this.destroy();
+            }
+            else{
+                this.setVisible(false);
+            }
+        }, this);
+        this.setData("isDead", true);
+    };
+    
 }
 
 class Player extends Entity{
     constructor(scene, x, y, key){
         super(scene, x, y, key, "Player");
-        this.setData("speed", 200); // dictates the speed the player moves. 
-        //this.play("rocketman");
+        this.setData("speed", 200); 
+        this.setData("isShooting", false);
+        this.setData("timerShootDelay", 20);
+        this.setData("timerShootTick", this.getData("timerShootDelay") - 1);
+
     }
-    create(){
-        this.setCollideWorldBounds(true);
-    }
+
     moveUp() {
             this.body.velocity.y = -this.getData("speed");
         }
@@ -41,23 +59,48 @@ class Player extends Entity{
 
     update(){
         this.body.setVelocity(0, 0);
-        //this.x = Phaser.Math.Clamp(this.x, 0, this.scene.game.config.width);
-        //this.y = Phaser.Math.Clamp(this.y, 0, this.scene.game.config.height);
+        this.x = Phaser.Math.Clamp(this.x, 40, 360);
+        this.y = Phaser.Math.Clamp(this.y, 25, 475);
 
+        if (this.getData("isShooting")) {
+            if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
+                this.setData("timerShootTick", this.getData("timerShootTick") + 1); // every game update, increase timerShootTick by one until we reach the value of timerShootDelay
+            }
+        else { // when the "manual timer" is triggered:
+            var laser = new Fire(this.scene, this.x+40, this.y+8);
+            this.scene.playerFireBeams.add(laser);
+
+            //this.scene.sfx.laser.play(); // play the laser sound effect
+            this.setData("timerShootTick", 0);
+            }
+        }
     }
         
     
+}
+
+class Fire extends Entity{
+    constructor(scene, x, y, key){
+        super(scene, x, y, "fire", "Fire ");
+        this.body.velocity.x = 200;
+    }
 }
 
 class Rock extends Entity{
     constructor(scene, x, y, key){
         super(scene, x, y, key, 'Rock');
         this.body.velocity.x = -Phaser.Math.Between(60,100);
+        
+        
+        
      }
-    //update(){
-    //    this.setVelocityX(-100);
-    //}
-}
+    update(){    
+         
+            rockI.update()
+        
+    }
+    }
+
 
 class GemI extends Entity{
     constructor(scene, x, y, key){
