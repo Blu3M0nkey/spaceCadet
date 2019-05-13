@@ -14,12 +14,14 @@ class SceneMain extends Phaser.Scene{
         //Images
         this.load.image('bckgrd', 'asset/bckgrd.svg');
         this.load.image('rock','asset/rock.svg');
-        this.load.image('fire', 'asset/fire.svg')
-        this.load.image('grnGem', 'asset/grn_gem.svg')
-        this.load.image('redGem','asset/red_gem.svg')
+        this.load.image('fire', 'asset/fire.svg');
+        this.load.image('grnGem', 'asset/grn_gem.svg');
+        this.load.image('redGem','asset/red_gem.svg');
+        
+        
         //Sprite Sheets
         this.load.spritesheet('rocketman', 'asset/rocketman.svg', {frameWidth: 77, frameHeight: 48});
-        this.load.spritesheet("sprExplosion", 'asset/Explosion.svg', {frameWidth: 48,frameHeight:48});
+        this.load.spritesheet("sprExplosion" , 'asset/Explosion.svg', {frameWidth: 48,frameHeight:48});
 
         //Sounds
         
@@ -212,7 +214,7 @@ class SceneMain extends Phaser.Scene{
         this.physics.pause();
         player.setTint(0xffff);
         this.player.setData("isDead", true)
-        //console.log(player.x,rock.x, player.y, rock.y);
+        player.onDestroy();
     };
 
     function collectCoin(player, coin){

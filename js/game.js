@@ -11,7 +11,8 @@ var config = {
     },
     scene: [
         SceneMainMenu,
-        SceneMain    
+        SceneMain,
+        SceneGameOver
     ]
 
     

@@ -1,10 +1,9 @@
-// this enables class useage, error in eslint.js update, i think this rolls back some stuff...
 /* eslint-env es6 */
 /* eslint-disable */
 
-class SceneMainMenu extends Phaser.Scene {
+class SceneGameOver extends Phaser.Scene {
     constructor() {
-        super({key:"SceneMainMenu"});
+        super({key:"SceneGameOver"});
     }
     
     preload() {
@@ -13,6 +12,7 @@ class SceneMainMenu extends Phaser.Scene {
         this.load.image('btnNorm','asset/btnNorm.svg');
         this.load.image('btnHover','asset/btnHover.svg');
         this.load.image('btnPush','asset/btnPush.svg');
+        this.load.image('endTxt', 'asset/GameOver.svg');
         
         //add button images. 
         
@@ -23,6 +23,8 @@ class SceneMainMenu extends Phaser.Scene {
         //this.scene.start("SceneMain");
         
         this.btnPlay = this.add.sprite(350, 250, 'btnNorm');
+        
+        this.image = this.add.image(350, 100, 'endTxt');
         
         this.btnPlay.setInteractive();
         
@@ -44,8 +46,8 @@ class SceneMainMenu extends Phaser.Scene {
             this.scene.start("SceneMain");
         },this);
     
+        
     }
     
     
 } 
-
