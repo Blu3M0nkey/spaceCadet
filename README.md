@@ -1,4 +1,4 @@
-# spaceCadet
+# SpaceCadet
 
 This is a simple game that is being reconfigured to provide more options. 
 
@@ -9,3 +9,4 @@ space bar to fire.
 
 
 
+ 
