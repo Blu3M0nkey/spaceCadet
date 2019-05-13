@@ -38,7 +38,6 @@ class Player extends Entity{
         this.setData("isShooting", false);
         this.setData("timerShootDelay", 20);
         this.setData("timerShootTick", this.getData("timerShootDelay") - 1);
-
     }
 
     moveUp() {
@@ -69,24 +68,35 @@ class Player extends Entity{
         else { // when the "manual timer" is triggered:
             var laser = new Fire(this.scene, this.x+40, this.y+8);
             this.scene.playerFireBeams.add(laser);
-
+            this.scene.laser_bar.update(-5);
             //this.scene.sfx.laser.play(); // play the laser sound effect
             this.setData("timerShootTick", 0);
+            
             }
         }
     }
     
-    onDestroy(){
-        this.scene.time.addEvent({
-            delay:1000,
-            callback : function(){
-                this.scene.scene.start('SceneGameOver');
-            },
-            callbackScope:this,
-            loop:false
-        })
-    }
+    onDestroy(canHurt){
+        if(canHurt){
+            this.scene.health_bar.update(-10);
+        }
+        if(this.scene.health_bar.health<= 0){
+            this.scene.player.setTint(0xffff);
+            this.scene.physics.pause();
+            
+            this.scene.player.setData("isDead", true);
+            this.scene.time.addEvent({
+                delay:1000,
+                callback : function(){
+                    this.scene.scene.start('SceneGameOver');
+                },
+                callbackScope:this,
+                loop:false
+            })
+        }
         
+    }
+    
     
 }
 
@@ -100,16 +110,8 @@ class Fire extends Entity{
 class Rock extends Entity{
     constructor(scene, x, y, key){
         super(scene, x, y, key, 'Rock');
-        this.body.velocity.x = -Phaser.Math.Between(60,100);
-        
-        
-        
+        this.body.velocity.x = -Phaser.Math.Between(60,100);  
      }
-    update(){    
-         
-            rockI.update()
-        
-    }
     }
 
 
@@ -118,11 +120,46 @@ class GemI extends Entity{
         super(scene, x, y, key, 'GemI');
         this.body.velocity.x = -Phaser.Math.Between( 50, 80);
     }
+    update(x){
+        if(this.scene.health_bar.health+x<= 200)
+            this.scene.health_bar.update(x);
+        else
+            this.scene.health_bar.update(200-this.scene.health_bar.health);
+        this.destroy();
+        
+    }
+    
 }
 
 class GemII extends Entity{
     constructor(scene, x, y, key){
         super(scene, x, y, key, 'GemII');
-        this.body.velocity.x = -Phaser.Math.Between( 50,80);
+        this.body.velocity.x = -Phaser.Math.Between(50,80);
     }
+    update(x){
+        if(this.scene.laser_bar.health+x<= 200)
+            this.scene.laser_bar.update(x);
+        else
+            this.scene.laser_bar.update(200-this.scene.laser_bar.health);
+        this.destroy();
+        
+    }
+    
+}
+
+class statusBar extends Entity{
+    constructor(scene, x, y, key){
+        super(scene, x, y, key, 'HealthBar');
+        this.health = 200;
+        this.setDisplaySize(this.health, 10);  
+    }
+    
+    update(x){
+        if (this.health+x <= 200 && this.health+x >= 0){
+            this.health +=x;
+            this.setDisplaySize(this.health, 10);    
+        }
+        
+    }
+    
 }

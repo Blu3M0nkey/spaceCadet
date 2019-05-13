@@ -17,7 +17,8 @@ class SceneMain extends Phaser.Scene{
         this.load.image('fire', 'asset/fire.svg');
         this.load.image('grnGem', 'asset/grn_gem.svg');
         this.load.image('redGem','asset/red_gem.svg');
-        
+        this.load.image('grnBar', 'asset/healthbar.png');
+        this.load.image('redBar','asset/firebar.png')
         
         //Sprite Sheets
         this.load.spritesheet('rocketman', 'asset/rocketman.svg', {frameWidth: 77, frameHeight: 48});
@@ -29,6 +30,7 @@ class SceneMain extends Phaser.Scene{
     create(){
         
     this.image = this.add.image(350, 250, 'bckgrd');
+     
         //Assign sprite to movements:
     this.anims.create({
       key: "sprExplosion",
@@ -74,7 +76,10 @@ class SceneMain extends Phaser.Scene{
     this.gemI = this.add.group();
     this.gemII = this.add.group();
     this.playerFireBeams = this.add.group();
-
+    
+    this.health_bar = new statusBar(this, 550, 25, 'grnBar');    
+    this.laser_bar = new statusBar(this, 550, 50, 'redBar'); 
+    
     this.time.addEvent({ 
         delay:1000,
         callback: function(){
@@ -91,7 +96,7 @@ class SceneMain extends Phaser.Scene{
 
         
     this.time.addEvent({
-        delay:3500,
+        delay:6000,
         callback: function(){
             var ggem = new GemI(
             this,
@@ -113,25 +118,19 @@ class SceneMain extends Phaser.Scene{
         loop: true
     });
         
-    if (this.keySpace.isDown) {
-      this.player.setData( "isShooting", true);
-    }
-    else {
-      this.player.setData( "timerShootTick", this.player.getData( "timerShootDelay") - 1);
-      this.player.setData( "isShooting", false);
-    }
-
+       
     this.physics.add.collider(this.player, this.rocks, hitRock, proc_coll, this);
     this.physics.add.collider(this.playerFireBeams, this.rocks, destRock)
-
+        
+        this.physics.add.collider(this.player, this.gemI, collectGrn);
+        
+        this.physics.add.collider(this.player, this.gemII, collectRed);
 
 }
     
     update(){
         this.player.update();
-        
-        
-        
+
         
         if(this.key_W.isDown && !this.key_A.isDown)
         {
@@ -158,8 +157,9 @@ class SceneMain extends Phaser.Scene{
                 this.player.moveRight();
         this.player.anims.play('Default', true);
         }
-        if (this.keySpace.isDown) {
+        if (this.keySpace.isDown && this.laser_bar.health >=5) {
             this.player.setData("isShooting", true);
+            
         }
         else {
             this.player.setData("timerShootTick",    this.player.getData("timerShootDelay") - 1);
@@ -192,15 +192,13 @@ class SceneMain extends Phaser.Scene{
                     gem.destroy();
                 }
             }
-        }
-        
-        
-        
+        }    
     }
 }
     function proc_coll(player,rock){ 
-        return(player.x+19 >= rock.x-19 && player.x-16 <= rock.x+17  &&player.y-12<=rock.y+15 && player.y+15 >= rock.y-15)
+        return(player.x+19 >= rock.x-19 && player.x-16 <= rock.x+17 && player.y-12 <= rock.y+15 && player.y+15 >= rock.y-15)
     };
+
     function destRock(beam, rock){
         if (rock){
             if (rock.onDistroy !== undefined){
@@ -210,33 +208,24 @@ class SceneMain extends Phaser.Scene{
             beam.destroy();
         }
     };
+
     function hitRock(player, rock){
-        this.physics.pause();
-        player.setTint(0xffff);
-        this.player.setData("isDead", true)
-        player.onDestroy();
+        player.onDestroy(!rock.getData("isDead"));
+        if(rock){
+            if(rock.onDistroy !== undefined){
+                rock.onDistroy();
+            }
+            rock.explode(true);
+        }
+        
+
+
     };
 
-    function collectCoin(player, coin){
-        coin.disableBody(true,true);
-        score += 5;
-        scoreText.setText ( 'score: '+score);
-    };
-    
     function collectGrn(player, grngem){
-        grngem.disableBody(true, true);
-        score +=6;
-        scoreText.setText('score: '+score);
+        grngem.update(6);
     };
     
     function collectRed(player, redgem){
-        redgem.disableBody(true, true);
-        score+=10;
-        scoreText.setText('score: '+score);
+        redgem.update(5);
     };
-    
-    
-
-
-
-
