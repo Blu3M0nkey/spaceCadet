@@ -1,0 +1,26 @@
+
+> Update Green/Red Gems:
+	> sprite it, add shimmer and spin?
+	
+> Option Menu:
+	> Add player skin select
+	> credits
+
+> Add sounds
+	> theme by bensound.com
+	> explosions from freesound.org
+	> Gem collection (x2??)
+	> beam shot from freesound.org
+	> btn? 
+
+> Entities:
+	> update to a poly-collider. There's a way to use a polygone as a collider boundary on the example site, good luck finding it again though. 
+    
+	> create png to reduce memory for all images. 
+
+    > ?? sound size reducable?
+    
+    > update stat bars to variable max health 
+    
+
+> COMMENT EVERYTHING , never not done.... 

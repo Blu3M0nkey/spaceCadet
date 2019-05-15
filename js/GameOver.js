@@ -7,26 +7,28 @@ class SceneGameOver extends Phaser.Scene {
     }
     
     preload() {
-        this.load.image("dude", "asset/Images/surfer.svg");
-        this.load.image("bckgrd","asset/bckgrd.svg");
-        this.load.image('btnNorm','asset/btnNorm.svg');
-        this.load.image('btnHover','asset/btnHover.svg');
-        this.load.image('btnPush','asset/btnPush.svg');
-        this.load.image('endTxt', 'asset/GameOver.svg');
+        // Images
+        this.load.image("bckgrd","asset/Images/bckgrd.svg");
+        this.load.image('endTxt', 'asset/Images/GameOver.svg');
         
-        //add button images. 
+        // Buttons
+        this.load.image('btnNorm','asset/Images/btnNorm.svg');
+        this.load.image('btnHover','asset/Images/btnHover.svg');
+        this.load.image('btnPush','asset/Images/btnPush.svg');
         
+
     }
     
     create(){
+        // Load Background
         this.image=this.add.image(350,250, 'bckgrd');
-        //this.scene.start("SceneMain");
-        
-        this.btnPlay = this.add.sprite(350, 250, 'btnNorm');
         
         this.image = this.add.image(350, 100, 'endTxt');
         
-        this.btnPlay.setInteractive();
+        // Instantiate the Button and its functionality
+        this.btnPlay = this.add.sprite(350, 250, 'btnNorm');
+        
+        this.btnPlay.setInteractive();//Important
         
         this.btnPlay.on("pointerover",function(){
             this.btnPlay.setTexture('btnHover');

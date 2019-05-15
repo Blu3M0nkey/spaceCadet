@@ -9,19 +9,29 @@ class SceneMainMenu extends Phaser.Scene {
     
     preload() {
         this.load.image("dude", "asset/Images/surfer.svg");
-        this.load.image("bckgrd","asset/bckgrd.svg");
-        this.load.image('btnNorm','asset/btnNorm.svg');
-        this.load.image('btnHover','asset/btnHover.svg');
-        this.load.image('btnPush','asset/btnPush.svg');
+        this.load.image("bckgrd","asset/Images/bckgrd.svg");
         
-        //add button images. 
+        //Buttons
+        this.load.image('btnNorm','asset/Images/btnNorm.svg');
+        this.load.image('btnHover','asset/Images/btnHover.svg');
+        this.load.image('btnPush','asset/Images/btnPush.svg');
+        
+        //Audio
+        this.load.audio('mp3Theme','asset/Sounds/bensound-scifi.mp3' );
+        
         
     }
     
     create(){
         this.image=this.add.image(350,250, 'bckgrd');
+        
+        //For game testing
         //this.scene.start("SceneMain");
         
+        //Audio
+        this.sound.add('mp3Theme', {volume:0.5}).play();
+        
+        // Buttons
         this.btnPlay = this.add.sprite(350, 250, 'btnNorm');
         
         this.btnPlay.setInteractive();

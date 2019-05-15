@@ -1,3 +1,4 @@
+// Allow for classes to be used
 /* eslint-env es6 */
 /* eslint-disable */
 
@@ -11,12 +12,14 @@ class Entity extends Phaser.GameObjects.Sprite {
         this.setData("isDead",false);
         
     }
+    // used to destroy rocks and later obsticals.
     explode(canDestroy){
         if(!this.getData("isDead")){
             this.setTexture("sprExplosion");
             this.anims.play("sprExplosion");
             
             //add sounds
+            
         }
         this.on('animationcomplete', function(){
             if(canDestroy){
@@ -38,8 +41,10 @@ class Player extends Entity{
         this.setData("isShooting", false);
         this.setData("timerShootDelay", 20);
         this.setData("timerShootTick", this.getData("timerShootDelay") - 1);
+        
+        
     }
-
+    
     moveUp() {
             this.body.velocity.y = -this.getData("speed");
         }
@@ -58,9 +63,12 @@ class Player extends Entity{
 
     update(){
         this.body.setVelocity(0, 0);
+        
+        //set bounderies for the Player
         this.x = Phaser.Math.Clamp(this.x, 40, 360);
         this.y = Phaser.Math.Clamp(this.y, 25, 475);
-
+        
+        // increase shooting counter while spacebar is held down
         if (this.getData("isShooting")) {
             if (this.getData("timerShootTick") < this.getData("timerShootDelay")) {
                 this.setData("timerShootTick", this.getData("timerShootTick") + 1); // every game update, increase timerShootTick by one until we reach the value of timerShootDelay
@@ -69,6 +77,7 @@ class Player extends Entity{
             var laser = new Fire(this.scene, this.x+40, this.y+8);
             this.scene.playerFireBeams.add(laser);
             this.scene.laser_bar.update(-5);
+            this.scene.beamshot.play();
             //this.scene.sfx.laser.play(); // play the laser sound effect
             this.setData("timerShootTick", 0);
             
@@ -76,9 +85,10 @@ class Player extends Entity{
         }
     }
     
+    // Distroys the player if health == 0, and ensures that obsticals only hit once with parameter
     onDestroy(canHurt){
         if(canHurt){
-            this.scene.health_bar.update(-10);
+            this.scene.health_bar.update(-20);
         }
         if(this.scene.health_bar.health<= 0){
             this.scene.player.setTint(0xffff);
@@ -120,6 +130,8 @@ class GemI extends Entity{
         super(scene, x, y, key, 'GemI');
         this.body.velocity.x = -Phaser.Math.Between( 50, 80);
     }
+    
+    // Updates health bar when gem is collected and removes gem
     update(x){
         if(this.scene.health_bar.health+x<= 200)
             this.scene.health_bar.update(x);
@@ -136,6 +148,8 @@ class GemII extends Entity{
         super(scene, x, y, key, 'GemII');
         this.body.velocity.x = -Phaser.Math.Between(50,80);
     }
+    
+    // Updates ammo bar when Red gem is collected and removes this gem
     update(x){
         if(this.scene.laser_bar.health+x<= 200)
             this.scene.laser_bar.update(x);
@@ -147,19 +161,26 @@ class GemII extends Entity{
     
 }
 
+// used for red and green status bars. 
 class statusBar extends Entity{
     constructor(scene, x, y, key){
-        super(scene, x, y, key, 'HealthBar');
+        super(scene, x, y, key, 'StatusBar');
         this.health = 200;
         this.setDisplaySize(this.health, 10);  
     }
     
     update(x){
-        if (this.health+x <= 200 && this.health+x >= 0){
+        if (this.health+x <= 200){
             this.health +=x;
-            this.setDisplaySize(this.health, 10);    
+        }
+        if(this.health >=0){
+        this.setDisplaySize(this.health, 10);    
+        }
+        else{
+            this.setDisplaySize(0, 10);
         }
         
     }
     
 }
+
