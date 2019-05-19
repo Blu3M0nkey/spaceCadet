@@ -9,12 +9,12 @@ class SceneGameOver extends Phaser.Scene {
     preload() {
         // Images
         this.load.image("bckgrd","asset/Images/bckgrd.svg");
-        this.load.image('endTxt', 'asset/Images/GameOver.svg');
+        this.load.image('endTxt', 'asset/Images/GameOver.png');
         
         // Buttons
-        this.load.image('btnNorm','asset/Images/btnNorm.svg');
-        this.load.image('btnHover','asset/Images/btnHover.svg');
-        this.load.image('btnPush','asset/Images/btnPush.svg');
+        this.load.image('btnNorm','asset/Images/btnNorm.png');
+        this.load.image('btnHover','asset/Images/btnHover.png');
+        this.load.image('btnPush','asset/Images/btnPush.png');
         
 
     }

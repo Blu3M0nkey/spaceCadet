@@ -129,6 +129,7 @@ class GemI extends Entity{
     constructor(scene, x, y, key){
         super(scene, x, y, key, 'GemI');
         this.body.velocity.x = -Phaser.Math.Between( 50, 80);
+        this.anims.play(key);
     }
     
     // Updates health bar when gem is collected and removes gem
@@ -147,6 +148,7 @@ class GemII extends Entity{
     constructor(scene, x, y, key){
         super(scene, x, y, key, 'GemII');
         this.body.velocity.x = -Phaser.Math.Between(50,80);
+        this.anims.play(key);
     }
     
     // Updates ammo bar when Red gem is collected and removes this gem

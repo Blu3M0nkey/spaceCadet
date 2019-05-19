@@ -9,12 +9,12 @@ class SceneMainMenu extends Phaser.Scene {
     
     preload() {
         this.load.image("dude", "asset/Images/surfer.svg");
-        this.load.image("bckgrd","asset/Images/bckgrd.svg");
+        this.load.image("bckgrd","asset/Images/stary_bckgrd.png");
         
         //Buttons
-        this.load.image('btnNorm','asset/Images/btnNorm.svg');
-        this.load.image('btnHover','asset/Images/btnHover.svg');
-        this.load.image('btnPush','asset/Images/btnPush.svg');
+        this.load.image('btnNorm','asset/Images/btnNorm.png');
+        this.load.image('btnHover','asset/Images/btnHover.png');
+        this.load.image('btnPush','asset/Images/btnPush.png');
         
         //Audio
         this.load.audio('mp3Theme','asset/Sounds/bensound-scifi.mp3' );

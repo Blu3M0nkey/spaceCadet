@@ -12,22 +12,20 @@ class SceneMain extends Phaser.Scene{
     preload() {
         //Load Game assets
         //Images
-        this.load.image('bckgrd', 'asset/Images/bckgrd.svg');
-        this.load.image('rock','asset/Images/rock.svg');
-        this.load.image('fire', 'asset/Images/fire.svg');
-        this.load.image('grnGem', 'asset/Images/grn_gem.svg');
-        this.load.image('redGem','asset/Images/red_gem.svg');
+        this.load.image('bckgrd', 'asset/Images/bckgrd.png');
+        this.load.image('rock','asset/Images/rock.png');
+        this.load.image('fire', 'asset/Images/fire.png');
+
         this.load.image('grnBar', 'asset/Images/healthbar.png');
         this.load.image('redBar','asset/Images/firebar.png')
         
         //Sprite Sheets
-        this.load.spritesheet('rocketman', 'asset/Images/rocketman.svg', {frameWidth: 77, frameHeight: 48});
-        this.load.spritesheet("sprExplosion" , 'asset/Images/Explosion.svg', {frameWidth: 48,frameHeight:48});
+        this.load.spritesheet('rocketman', 'asset/Images/rocketman.png', {frameWidth: 82.75 , frameHeight: 48});
+        this.load.spritesheet("sprExplosion" , 'asset/Images/Explosion.png', {frameWidth: 50,frameHeight:48});
+        this.load.spritesheet('grnGem', 'asset/Images/grn_gem.png', {frameWidth: 23, frameHeight:29});
+        this.load.spritesheet('redGem', 'asset/Images/red_gem.png', {frameWidth: 23, frameHeight:29});
         
-        
-        //Sounds
-        //this.load.audio('mp3Theme','asset/Sounds/bensound-scifi.mp3' );
-        
+        //Sounds       
         this.load.audio('beamShot','asset/Sounds/sfx-magic-fireball-001.mp3');
         
     }
@@ -52,6 +50,22 @@ class SceneMain extends Phaser.Scene{
           frameRate: 20,
           repeat: 0
         });
+        
+        this.anims.create({
+            key: "grnGem",
+            frames: this.anims.generateFrameNumbers("grnGem"),
+            frameRate: 6,
+            yoyo: true,
+            repeat:-1
+        })
+        
+        this.anims.create({
+            key: "redGem",
+            frames: this.anims.generateFrameNumbers("redGem"),
+            frameRate: 6,
+            yoyo: true,
+            repeat:-1
+        })
 
         this.anims.create({
             key: 'Default',
