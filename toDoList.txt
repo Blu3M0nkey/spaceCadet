@@ -1,7 +1,4 @@
 
-> Update Green/Red Gems:
-	> sprite it, add shimmer and spin?
-	
 > Option Menu:
 	> Add player skin select
 	> credits
@@ -14,13 +11,22 @@
 	> btn? 
 
 > Entities:
-	> update to a poly-collider. There's a way to use a polygone as a collider boundary on the example site, good luck finding it again though. 
-    
-	> create png to reduce memory for all images. 
+	> update to a poly-collider. There's a way to use a polygone as a collider boundary on the example site, good luck finding it again though.  
 
     > ?? sound size reducable?
     
     > update stat bars to variable max health 
     
+> Credits page
+    > there is a problem using a spritesheet as a button format, idky yet. 
+    > Need to compose the information
+        > Author
+        > Illistration
+        > Music
+        > Sound FX
+
+    > ?? how to use google fonts in canvas/phaser
+    
 
 > COMMENT EVERYTHING , never not done.... 
+
