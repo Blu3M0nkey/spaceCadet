@@ -8,7 +8,7 @@ class SceneMainMenu extends Phaser.Scene {
     }
     
     preload() {
-        this.load.image("dude", "asset/Images/surfer.svg");
+
         this.load.image("bckgrd","asset/Images/stary_bckgrd.png");
         
         //Buttons
@@ -26,7 +26,7 @@ class SceneMainMenu extends Phaser.Scene {
         this.image=this.add.image(350,250, 'bckgrd');
         
         //For game testing
-        //this.scene.start("SceneMain");
+        this.scene.start("SceneCredits");
         
         //Audio
         this.sound.add('mp3Theme', {volume:0.5}).play();
