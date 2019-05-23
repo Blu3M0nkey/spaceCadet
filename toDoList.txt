@@ -18,14 +18,15 @@
     > update stat bars to variable max health 
     
 > Credits page
-    > there is a problem using a spritesheet as a button format, idky yet. 
+    > Fix Alignment for the SpriteSheet
+    > Create a button for the main menu to put in the Credits section.
     > Need to compose the information
         > Author
         > Illistration
-        > Music
-        > Sound FX
+        > Music > add credit, need to find
+        > Sound FX > add credit, need to find. 
 
-    > ?? how to use google fonts in canvas/phaser
+    
     
 
 > COMMENT EVERYTHING , never not done.... 
